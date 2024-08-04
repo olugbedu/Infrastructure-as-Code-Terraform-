@@ -10,33 +10,33 @@ This is a breakdown of the steps I took to set up a Virtual Private Cloud (VPC) 
 
 ### **modules/scripts for ec2, vpc, subnet, nat_gateway, route_table, security_group.**
 
-#### Ec2 module:  ![ec2 module](./TERRAFORM/modules/ec2/main.tf) 
+#### Ec2 module:  
 I used a `Terraform data block` to attach a keypair already on my console to the instances, `Terraform resource block` to create the instances (public and private), `user_data` to set the path for the ngix installation ![user_data](images/user_data.png) 
 ![user_data](images/user_data2.png)
 ![ec2 instance](images/ec2_instance.png)
 
-#### VPC module: ![vpc module](./TERRAFORM/modules/vpc/main.tf)
+#### VPC module: 
 I created a vpc module including the internet gateway configuration using the `Terraform resource block`
 ![vpc](images/VPC.png)
 
-#### Subnets module: ![subnet module](./TERRAFORM/modules/subnet/main.tf)
+#### Subnets module: 
 I created public and private subnets using the `Terraform resource block`
 
 ![subnets](images/subnets.png)
 
-#### NAT Gateway module: ![nat_gateway module](./TERRAFORM/modules/nat_gateway/main.tf)
+#### NAT Gateway module: 
 I created a NAT Gateway in the public subnet and allocated an Elastic IP for the NAT Gateway, using `Terraform resource block`.
 
 ![NAT gateway](images/nat.png)
 
 
-#### Route Tables module: ![route_table module](./TERRAFORM/modules/route_table/main.tf)
+#### Route Tables module: 
 I configured the public route table, associated it with public subnet and added the route to internet(IGW 0.0.0.0/0). Then, I configured the private route table, associated it with private subnet and addded nat gateway to ensure no direct route to internet(NAT 0.0.0.0/0).
 
 ![Route table](images/RT.png)
 
 
-#### Security Groups module: ![security_group module](./TERRAFORM/modules/security_group/main.tf)
+#### Security Groups module:
 Using `Terraform resource block`  I created a Security Group for public instances, I named it PublicSecurityGroup and allowed the following protocols;
 - Inbound HTTP (port 80) 
 - HTTPS (port 443) traffic from anywhere (0.0.0.0/0).
@@ -60,6 +60,4 @@ Then i created a Security Group for private instances, I named it PrivateSecurit
 #### Terraform Destroy:
 ![terraform destroy](images/terraform_destroy.png)
 
-## Output of terraform plan:  ![plan](./TERRAFORM/tfplan.json)
-
-## Summary - These components all work together to create a secure, efficient, and scalable network environment on AWS using Terraform(Infrasttucture as Code).
+### Summary - These components all work together to create a secure, efficient, and scalable network environment on AWS using Terraform(Infrasttucture as Code).
